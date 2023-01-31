@@ -14,4 +14,5 @@ public class Todo {
     @Id
     private String id;
     private String name;
+    private boolean checked;
 }

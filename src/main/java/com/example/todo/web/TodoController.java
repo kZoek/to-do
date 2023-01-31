@@ -6,6 +6,7 @@ import com.example.todo.repo.TodoRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+// import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api")
@@ -24,4 +25,11 @@ public class TodoController {
     public Todo create(@RequestBody Todo todo){
         return todoRepo.insert(todo);
     }
+    @PostMapping("/checkTodo")
+    public Todo checkTodo(@RequestBody Todo todo, boolean isChecked, Long id){
+        String item = todoRepo.findOne(id);
+        return this.todoRepo.save(isChecked);
+    }
+
+
 }

@@ -1,3 +1,13 @@
-body{
+section{
     width:80%;
+    margin:auto;
+}
+#editTask:hover {
+    color: #227d0a;
+}
+#deleteTask:hover {
+    color:darkred;
+}
+#editField{
+    display:none;
 }

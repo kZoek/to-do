@@ -8,10 +8,27 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+    <link rel="stylesheet" href="style.css">
     <title>To Do</title>
 </head>
 <body>
-    <p id="test">Hello World</p>
+    <h1>To Do List</h1>
+
+    <section>
+        <ion-item>
+            <ion-label>Enter new Task here:</ion-label>
+            <ion-input id="newTask"></ion-input>
+        </ion-item>
+        <ion-button shape="round" color="success" onclick="createNewTask();">Add Task</ion-button>
+
+        <ion-list id="todos" [inset]="true">
+
+        </ion-list>
+
+
+    </section>
+
+
 </body>
     <script src="app.js"></script>
 </html>
