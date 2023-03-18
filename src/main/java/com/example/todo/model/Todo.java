@@ -15,4 +15,25 @@ public class Todo {
     private String id;
     private String name;
     private boolean checked;
+
+    public Todo(String id, String name, boolean checked){
+        this.id = id;
+        this.name = name;
+        this.checked = checked;
+    }
+
+    public String getId(){
+        return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public boolean getStatus(){
+        return checked;
+    }
+
+
+
+    
+
 }
