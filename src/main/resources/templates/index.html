@@ -17,7 +17,7 @@
     <section>
         <ion-item>
             <ion-label>Enter new Task here:</ion-label>
-            <ion-input id="newTask"></ion-input>
+            <ion-input aria-label="newTask" id="newTask"></ion-input>
         </ion-item>
         <ion-button shape="round" color="success" onclick="createNewTask();">Add Task</ion-button>
 
@@ -25,8 +25,24 @@
 
         </ion-list>
 
-
+        <section id="editField" class="hidden">
+            <ion-card>
+                <ion-card-header>
+                  <ion-card-subtitle>Editing: </ion-card-subtitle>
+                  <ion-card-title></ion-card-title>
+                </ion-card-header>
+              
+                <ion-card-content>
+                    <ion-input label="new Title: "></ion-input>
+                </ion-card-content>
+              
+                <ion-button shape="round" onclick="saveChanges()" fill="solid">Edit</ion-button>
+                <ion-button shape="round" onclick="closeWindow()" fill="solid">Cancel</ion-button>
+              </ion-card>
+        </section>
     </section>
+    
+   
 
 
 </body>

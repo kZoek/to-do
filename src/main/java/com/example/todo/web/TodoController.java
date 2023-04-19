@@ -30,23 +30,18 @@ public class TodoController {
     }
     // if todo is checked, check it in DB
     @PutMapping("/checkTodo/{id}")
-    public ResponseEntity<Object> updateListItemStatus(@PathVariable String id, boolean isChecked){
+    public ResponseEntity<Object> updateListItemStatus(@PathVariable String id, @RequestBody Todo requestBody){
         Optional<Todo> listItem = todoRepo.findById(id);
         
         if (listItem.isPresent()) {
-                    Todo item = listItem.get();
-                    item.setChecked(isChecked);
-                    todoRepo.save(item);
-                    return ResponseEntity.ok(item);
-                } else {
-                    return ResponseEntity.notFound().build();
-                }
+            Todo item = listItem.get();
+            item.setChecked(requestBody.get("isChecked"));
+            todoRepo.save(item);
+            return ResponseEntity.ok(item);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
                 
-    }
-    @DeleteMapping("todo/{id}") 
-    public Todo deleteTodo(@PathVariable String id){
-        return todoRepo.deleteById(id);
-    
     }
    
 

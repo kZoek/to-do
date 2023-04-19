@@ -3,6 +3,9 @@ package com.example.todo.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -28,12 +31,8 @@ public class Todo {
     public String getName(){
         return name;
     }
-    public boolean getStatus(){
+    public boolean isChecked(){
         return checked;
     }
-
-
-
     
-
 }
