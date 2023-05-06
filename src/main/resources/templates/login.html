@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- ionic -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
+</head>
+<body>
+    <section id="loginWindow">
+        <ion-input id="username" label="username" label-placement="floating" fill="solid" placeholder="Enter Username"></ion-input>
+        <ion-input id="password" type="password" label="password" label-placement="floating" fill="solid" placeholder="Enter Password"></ion-input>
+        <ion-button id="loginBtn">Login</ion-button>
+        <ion-button fill="clear"><a href="http://localhost:8080/home">Load without Account</a></ion-button>
+        <p id="messages"></p>
+        <span>
+            <ion-button id="registerBtn" color="#98f080">create Account</ion-button>
+        </span>
+
+        <section id="register" class="hidden">
+            <ion-input id="regUser" label="Create username" label-placement="floating" fill="solid" placeholder="Enter Username"></ion-input>
+            <ion-input id="regPw" label="Create password" label-placement="floating" fill="solid" placeholder="Enter Password"></ion-input>
+            <ion-button id="createAcc">Register</ion-button>
+        </section>
+    </section>
+
+
+    
+
+</body>
+<script src="login.js"></script>
+</html>

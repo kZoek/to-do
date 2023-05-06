@@ -43,6 +43,23 @@ public class TodoController {
             return null;
         }      
     }
+
+    // edit the Name of the Todo Item
+    @PutMapping("/editTodo")
+    public Todo editTodo(@RequestBody Todo requestBody){
+        Optional<Todo> listItem = todoRepo.findById(requestBody.getId());
+        
+        if (listItem.isPresent()) {
+            Todo item = listItem.get();
+            item.setName(requestBody.getName());
+            todoRepo.save(item);
+            return item;
+        } else {
+            return null;
+        }      
+    }
+
+    // delete Todo Item with ID
     @DeleteMapping("/deleteTodo/{id}")
     public ResponseEntity<String> deleteTodo(@PathVariable String id){
         try{

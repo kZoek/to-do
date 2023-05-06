@@ -18,3 +18,18 @@ section{
 .hidden{
     display:none;
 }
+
+/* Login Window Style in login.html file */
+#loginWindow{
+    max-width: 40%;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+}
+#registerBtn{
+    background-color:#98f080;
+}
+#register{
+    margin-top: 5rem;
+}

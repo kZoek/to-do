@@ -130,7 +130,19 @@ $(function() {
         // close the window
         $('#editField').toggleClass('hidden');
         // save the input 
-        console.log('changes saved: ' + newContent);
+        // console.log('changes saved: ' + newContent);
+        $.ajax({
+            type: 'PUT',
+            url: 'http://localhost:8080/api/editTodo',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
+                id: id,
+                name: newContent
+            }),
+            success: function(response){
+                console.log(response);
+            }
+        })
 
     }
     
