@@ -1,5 +1,6 @@
 package com.example.todo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Document
 public class Todo {
     @Id
@@ -19,20 +21,14 @@ public class Todo {
     private String name;
     private boolean checked;
 
-    public Todo(String id, String name, boolean checked){
-        this.id = id;
-        this.name = name;
-        this.checked = checked;
-    }
-
-    public String getId(){
-        return id;
-    }
-    public String getName(){
-        return name;
-    }
-    public boolean isChecked(){
-        return checked;
-    }
+    // public String getId(){
+    //     return id;
+    // }
+    // public String getName(){
+    //     return name;
+    // }
+    // public boolean isChecked(){
+    //     return checked;
+    // }
     
 }

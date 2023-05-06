@@ -15,6 +15,11 @@ $(function() {
                         console.log(response[i]);
                         $("#todos").append(createTemplate(response[i].id,response[i].name,response[i].checked));
                     })
+                   $('ion-checkbox').on('ionChange',function(event){
+                    console.log(event['target']);
+                    let checkbox = event['target'];
+                    checkTodo($(checkbox).closest('ion-item').attr('id'),$(checkbox).prop('checked'))
+                   })
                 }
             }
 
@@ -43,9 +48,8 @@ $(function() {
     function createTemplate(id,content,checkStatus){
         return `
          <ion-item id="`+ id +`">
-            <input id="todoItem" type="hidden" value="`+ id +`" >
              <span>
-                <ion-checkbox id="checkbox" aria-label="Label" slot="start" [indeterminate]="true" checked="`+ checkStatus +`"></ion-checkbox>
+                <ion-checkbox id="checkbox" aria-label="Label" slot="start" checked="`+ checkStatus +`"></ion-checkbox>
              </span>
               <ion-label id="content">` + content + `</ion-label>
                            
@@ -60,7 +64,7 @@ $(function() {
     // Eventhandler for click actions
     function handleTodoClick(element, eventType) {
         let id = element.attr('id');
-        let isChecked = element.find('#checkbox').prop('checked');
+        // let isChecked = element.find('#checkbox').prop('checked');
         let contentElement = element.find('#content'); // get the ion-label element with id="content"
         let content = contentElement.length ? contentElement.text() : ''; // check if the ion-label element exists and get its text content
       
@@ -72,15 +76,9 @@ $(function() {
           console.log('delete click: ' + id + ', content: ' + content);
           // Add your deleteTodo() function call here
           deleteTodo(id);
-        } else if (eventType === 'checkStatus') {
-            console.log('Checkstatus click: ' + id + ', checked: ' + isChecked);
-            checkTodo(id,isChecked);
         }
       }
       
-    //   $(document).on('click', '#todos ion-item', function() {
-    //     handleTodoClick($(this), 'click');
-    //   });
       
       $(document).on('click', '#todos ion-item #editTask', function(event) {
         event.stopPropagation();
@@ -92,25 +90,20 @@ $(function() {
         handleTodoClick($(this).closest('ion-item'), 'delete');
       });
 
-      $(document).on('click', '#todos ion-item ion-checkbox', function(event) {
-        event.stopPropagation();
-        handleTodoClick($(this).closest('ion-item'), 'checkStatus');
-      });
+    
+    
 // update checked status of the selected Item in DB
     function checkTodo(id,isChecked){
         $.ajax({
             type: 'PUT',
-            url: 'http://localhost:8080/api/checkTodo/'+id,
+            url: 'http://localhost:8080/api/checkTodo',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({
-                id: $('#todoItem').val(),
+                id: id,
                 checked: isChecked
             }),
             success: function(response){
-                $.each(response,function(i){
-                    console.log("database: "+response[i]);
-                })
-
+                console.log(response);
             }
 
         })
@@ -143,6 +136,17 @@ $(function() {
     
     function deleteTodo(id){
         console.log(id);
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:8080/api/deleteTodo/' + id,
+            success: function(response){
+                console.log(response);
+            }
+        })
+        .fail(function(status){
+            console.log(status);
+        })
+
     }
 
 

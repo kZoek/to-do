@@ -3,6 +3,7 @@ package com.example.todo.web;
 import com.example.todo.model.Todo;
 import com.example.todo.repo.TodoRepo;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,19 +30,28 @@ public class TodoController {
         return todoRepo.insert(todo);
     }
     // if todo is checked, check it in DB
-    @PutMapping("/checkTodo/{id}")
-    public ResponseEntity<Object> updateListItemStatus(@PathVariable String id, @RequestBody Todo requestBody){
-        Optional<Todo> listItem = todoRepo.findById(id);
+    @PutMapping("/checkTodo")
+    public Todo updateListItemStatus(@RequestBody Todo requestBody){
+        Optional<Todo> listItem = todoRepo.findById(requestBody.getId());
         
         if (listItem.isPresent()) {
             Todo item = listItem.get();
-            item.setChecked(requestBody.get("isChecked"));
+            item.setChecked(requestBody.isChecked());
             todoRepo.save(item);
-            return ResponseEntity.ok(item);
+            return item;
         } else {
-            return ResponseEntity.notFound().build();
+            return null;
+        }      
+    }
+    @DeleteMapping("/deleteTodo/{id}")
+    public ResponseEntity<String> deleteTodo(@PathVariable String id){
+        try{
+            todoRepo.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(id.concat(" is deleted"));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(e.getMessage());
         }
-                
+
     }
    
 
