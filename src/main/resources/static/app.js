@@ -2,6 +2,7 @@
 $(function() {
 
     getMyTasks();
+
 });
     // get all Tasks from BD
     function getMyTasks(){
@@ -20,6 +21,12 @@ $(function() {
                     let checkbox = event['target'];
                     checkTodo($(checkbox).closest('ion-item').attr('id'),$(checkbox).prop('checked'))
                    })
+                   // event handler to save changes
+                    $(document).on('click', '#saveBtn', function(event) {
+                        event.stopPropagation();
+                        handleTodoClick($(this).closest('ion-item'), 'edit');
+                    });
+                   
                 }
             }
 
@@ -61,36 +68,7 @@ $(function() {
         
     }
     
-    // Eventhandler for click actions
-    function handleTodoClick(element, eventType) {
-        let id = element.attr('id');
-        // let isChecked = element.find('#checkbox').prop('checked');
-        let contentElement = element.find('#content'); // get the ion-label element with id="content"
-        let content = contentElement.length ? contentElement.text() : ''; // check if the ion-label element exists and get its text content
-      
-        if (eventType === 'edit') {
-          console.log('edit click: ' + id + ', content: ' + content);
-          // Add your editTodo() function call here
-          editTodo(content);
-        } else if (eventType === 'delete') {
-          console.log('delete click: ' + id + ', content: ' + content);
-          // Add your deleteTodo() function call here
-          deleteTodo(id);
-        }
-      }
-      
-      
-      $(document).on('click', '#todos ion-item #editTask', function(event) {
-        event.stopPropagation();
-        handleTodoClick($(this).closest('ion-item'), 'edit');
-      });
-      
-      $(document).on('click', '#todos ion-item #deleteTask', function(event) {
-        event.stopPropagation();
-        handleTodoClick($(this).closest('ion-item'), 'delete');
-      });
-
-    
+   
     
 // update checked status of the selected Item in DB
     function checkTodo(id,isChecked){
@@ -110,6 +88,47 @@ $(function() {
 
 
     }
+
+  // Eventhandler for click actions
+  function handleTodoClick(element, eventType) {
+    let id = element.attr('id');
+    // let isChecked = element.find('#checkbox').prop('checked');
+    let contentElement = element.find('#content'); // get the ion-label element with id="content"
+    let content = contentElement.length ? contentElement.text() : ''; // check if the ion-label element exists and get its text content
+  
+    if (eventType === 'edit') {
+      console.log('edit click: ' + id + ', content: ' + content);
+      // Add your editTodo() function call here
+      editTodo(content);
+    } else if (eventType === 'delete') {
+      console.log('delete click: ' + id + ', content: ' + content);
+      // Add your deleteTodo() function call here
+      deleteTodo(id);
+    }else if (eventType === 'saveChanges') {
+        console.log('change click: ' + id + ', content: ' + content);
+        // Add your deleteTodo() function call here
+        saveChanges(id);
+      }
+    
+  }
+  /**
+   * Event handlers for click events on List items
+   * first Parameter: Event funtion, Second: HTML element
+   * third Parameter: on wich element the event will be used
+   */
+
+  // Event handler to Open editing fenster
+  $(document).on('click', '#todos ion-item #editTask', function(event) {
+    event.stopPropagation();
+    handleTodoClick($(this).closest('ion-item'), 'edit');
+  });
+  
+  // event handler to delete selected task
+  $(document).on('click', '#todos ion-item #deleteTask', function(event) {
+    event.stopPropagation();
+    handleTodoClick($(this).closest('ion-item'), 'delete');
+  });
+
 // Edit existing todo
 // toggle with pencil the ediging field
 
@@ -124,8 +143,7 @@ $(function() {
         $('#editField').toggleClass('hidden');
     }
 // close window and save changes
-    function saveChanges(){
-
+    function saveChanges(id){
         let newContent = $('#editField ion-input').val();
         // close the window
         $('#editField').toggleClass('hidden');
@@ -141,6 +159,7 @@ $(function() {
             }),
             success: function(response){
                 console.log(response);
+
             }
         })
 
@@ -153,12 +172,12 @@ $(function() {
             url: 'http://localhost:8080/api/deleteTodo/' + id,
             success: function(response){
                 console.log(response);
+                location.reload();
             }
         })
         .fail(function(status){
             console.log(status);
         })
-
     }
 
 
